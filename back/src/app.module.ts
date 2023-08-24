@@ -1,18 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UserController } from './users/user.controller';
-import { AuthService } from './services/auth.service';
-import { JwtModule } from '@nestjs/jwt';
-import { PrismaService } from './services/prisma.service';
+import { UserModule } from './users/user.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
-    imports: [
-        JwtModule.register({
-            secret: 'RAMDOM_TOKEN_SECRET', // Utilisez la même clé secrète que pour la création de jeton
-            signOptions: { expiresIn: '24h' },
-        }),
+    imports: [UserModule,
     ],
-    controllers: [UserController],
-    providers: [AuthService,PrismaService],
+    controllers: [AppController],
+    providers: [AppService],
+
 })
-export class AppModule {}
+export class 
+AppModule {}
 

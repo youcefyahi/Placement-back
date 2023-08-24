@@ -13,7 +13,7 @@ export class UserController {
     }
 
     @Post('register')
-    async register(@Body() userData: { username: string, email: string, password: string }) {
+    async register(@Body() userData: { email: string, password: string,firstName:string,lastName:string,phone:string }) {
         // Utilisez PrismaService pour enregistrer l'utilisateur
         const newUser = await this.prismaService.createUser(userData);
         return { message: 'Utilisateur enregistré avec succès' };
