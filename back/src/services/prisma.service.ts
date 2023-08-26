@@ -21,6 +21,25 @@ export class PrismaService {
     });
   }
 
+  
+
+  async findUserById(userId: number) {
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  }
+
+
+  async modifyUser(data: User): Promise<User> {
+    return this.prisma.user.update({ 
+      where: { id: data.id },
+      data:data
+     });
+  }
+
+  
+
+
 
 
 }

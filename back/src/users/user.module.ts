@@ -3,17 +3,22 @@ import { UserController } from './user.controller';
 import { AuthService } from 'src/services/auth.service';
 import { PrismaService } from 'src/services/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
+import { UserProfileController } from './user.controller';
+import { PassportModule } from '@nestjs/passport';
+import { UserService } from './user.service';
+
 
 
 
 @Module({
-    imports: [UserModule,
+    imports: [
+
         JwtModule.register({
             secret: 'RAMDOM_TOKEN_SECRET', // Utilisez la même clé secrète que pour la création de jeton
             signOptions: { expiresIn: '24h' },
-        }),
+        }),PassportModule
     ],
-    controllers: [UserController],
-    providers: [AuthService, PrismaService], // Ajoutez votre contrôleur à la liste des contrôleurs du module
+    controllers: [UserController,UserProfileController],
+    providers: [AuthService, PrismaService,UserService], // Ajoutez votre contrôleur à la liste des contrôleurs du module
 })
 export class UserModule { }

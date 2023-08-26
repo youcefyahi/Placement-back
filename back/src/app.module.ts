@@ -3,9 +3,13 @@ import { UserModule } from './users/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+
+
 @Module({
-    imports: [UserModule,
-    ],
+    imports: [
+        UserModule
+        // Autres modules et contrôleurs...
+      ],
     controllers: [AppController],
     providers: [AppService],
 
