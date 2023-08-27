@@ -1,8 +1,7 @@
-import { Controller, Post, Body, Get, Request, UseGuards, Param, UnauthorizedException, Put } from '@nestjs/common';
-import { AuthService } from 'src/services/auth.service';
-import { PrismaService } from 'src/services/prisma.service';
-import { JwtAuthGuard } from 'src/middleware/jwt-auth.guard';
-import { AuthGuard, AuthMiddleware } from 'src/middleware/auth.middleware';
+import { Controller, Post, Body, Get, Request, UseGuards,UnauthorizedException, Put } from '@nestjs/common';
+import { AuthService } from '../services/auth.service';
+import { PrismaService } from '../services/prisma.service';
+import { AuthGuard } from '../middleware/auth.middleware';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -30,8 +29,8 @@ export class UserController {
         const newUser = await this.prismaService.createUser({
             ...userData,
             password: hashedPassword
+            
         });
-
 
 
         return { message: 'Utilisateur enregistré avec succès' };
