@@ -40,7 +40,7 @@ export class PrismaService {
   async modifyPassword(email: string, password:string): Promise<User> {
     return this.prisma.user.update({
       where: { email },
-      data: password,
+      data: {password},
     });
   }
 }

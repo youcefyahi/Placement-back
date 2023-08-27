@@ -71,7 +71,7 @@ export class UserProfileController {
         return updatedUser;
     }
 
-    @Put()
+    @Put('password')
     async updatePassword(@Body() userData: {
         email: string;
         password: string; 
@@ -81,7 +81,7 @@ export class UserProfileController {
         const hashedPassword = await bcrypt.hash(userData.password, saltOrRounds);
 
         // Appelez la méthode pour mettre à jour le mot de passe dans le service approprié (par exemple, UserService)
-        const updatedPassword = await this.userService.updateUserPassword(userData.email, hashedPassword);
+        const updatedPassword = await this.userService.updatedPassword(userData.email, hashedPassword);
 
         console.log(updatedPassword);
         return updatedPassword;

@@ -18,7 +18,7 @@ export class UserService {
         return this.prisma.modifyUser(userId, userData);
     }
 
-    async updateUserPassword(email: string, password: string) {
+    async updatedPassword(email: string, password: string) {
 
         return this.prisma.modifyPassword(email, password);
     }
