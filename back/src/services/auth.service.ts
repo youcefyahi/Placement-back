@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from './prisma.service';
+import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class AuthService {
@@ -15,8 +17,11 @@ export class AuthService {
     async validateUser(credentials: { email: string, password: string }) {
         const user = await this.prisma.findUserByEmail(credentials.email);
 
-        if (user && user.password === credentials.password) {
-            return user;
+        if (user) {
+            const isMatch = await bcrypt.compare(credentials.password, user.password);
+            if (isMatch) {
+                return user;
+            }
         }
 
         return null; // Utilisateur non trouvé ou mot de passe incorrect

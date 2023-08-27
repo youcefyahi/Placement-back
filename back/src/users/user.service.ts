@@ -13,8 +13,14 @@ export class UserService {
         return this.prisma.findUserById(userId)
     }
 
-    async updateUserProfile(user: User) {
-        // Utilisez PrismaService ou votre propre logique pour mettre à jour les données de l'utilisateur
-        return this.prisma.modifyUser(user)
+    async updateUserProfile(userId: number, userData: User) {
+
+        return this.prisma.modifyUser(userId, userData);
     }
+
+    async updateUserPassword(email: string, password: string) {
+
+        return this.prisma.modifyPassword(email, password);
+    }
+    
 }

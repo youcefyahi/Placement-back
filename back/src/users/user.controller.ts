@@ -1,10 +1,11 @@
-import { Controller, Post, Body, Get, Request, UseGuards, UnauthorizedException, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards, Param, UnauthorizedException, Put } from '@nestjs/common';
 import { AuthService } from 'src/services/auth.service';
 import { PrismaService } from 'src/services/prisma.service';
 import { JwtAuthGuard } from 'src/middleware/jwt-auth.guard';
 import { AuthGuard, AuthMiddleware } from 'src/middleware/auth.middleware';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 
 
@@ -24,8 +25,17 @@ export class UserController {
     @Post('register')
     async register(@Body() userData: { email: string, password: string, firstName: string, lastName: string, phone: string }) {
         // Utilisez PrismaService pour enregistrer l'utilisateur
-        const newUser = await this.prismaService.createUser(userData);
+        const saltOrRounds = 10; // Nombre de "salts" pour le hachage
+        const hashedPassword = await bcrypt.hash(userData.password, saltOrRounds);
+        const newUser = await this.prismaService.createUser({
+            ...userData,
+            password: hashedPassword
+        });
+
+
+
         return { message: 'Utilisateur enregistré avec succès' };
+
     }
 }
 
@@ -50,11 +60,32 @@ export class UserProfileController {
         return userProfile;
     }
 
+    @Put()
+    async updateUser(@Request() req, @Body() userData: User) {
+
+        const userId = req['userId'];
+        const updatedUser = await this.userService.updateUserProfile(userId, userData);
+
+        // Vous pouvez retourner la réponse à la suite de la mise à jour si nécessaire
+        console.log(updatedUser)
+        return updatedUser;
+    }
 
     @Put()
-  update(@Body() user:User) {
-    return this.userService.updateUserProfile(user)
-  }
+    async updatePassword(@Body() userData: {
+        email: string;
+        password: string; 
+    }) {
+        // Utilisez bcrypt pour hacher le nouveau mot de passe
+        const saltOrRounds = 10; // Nombre de "salts" pour le hachage
+        const hashedPassword = await bcrypt.hash(userData.password, saltOrRounds);
+
+        // Appelez la méthode pour mettre à jour le mot de passe dans le service approprié (par exemple, UserService)
+        const updatedPassword = await this.userService.updateUserPassword(userData.email, hashedPassword);
+
+        console.log(updatedPassword);
+        return updatedPassword;
+    }
 
 
 }

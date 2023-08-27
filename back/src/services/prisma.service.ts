@@ -30,16 +30,17 @@ export class PrismaService {
   }
 
 
-  async modifyUser(data: User): Promise<User> {
-    return this.prisma.user.update({ 
-      where: { id: data.id },
-      data:data
-     });
+  async modifyUser(userId: number, userData: User): Promise<User> {
+    return this.prisma.user.update({
+      where: { id:userId },
+      data: userData,
+    });
   }
 
-  
-
-
-
-
+  async modifyPassword(email: string, password:string): Promise<User> {
+    return this.prisma.user.update({
+      where: { email },
+      data: password,
+    });
+  }
 }
