@@ -1,3 +1,36 @@
+# README - Projet NestJS
+
+## Introduction
+
+Bienvenue dans le projet NestJS ! Ce projet est une application web construite avec NestJS, un framework Node.js pour créer des applications serveur efficaces et évolutives.
+
+## Configuration de la Base de Données
+
+### Sauvegarde de la Base de Données
+
+Le dossier "CSV" de ce projet contient la sauvegarde de la base de données. Vous pouvez restaurer la base de données en important ce fichier.
+
+### Mot de Passe de la Base de Données
+
+Le mot de passe de la base de données est le suivant : `serbao"(`
+
+## Utilisateur de Test
+
+Un utilisateur de test a déjà été créé pour faciliter la vérification de l'application. Voici les informations de cet utilisateur :
+
+- Email : `youcef@gmail.com`
+- Mot de passe : `motdepasse`
+
+## Configuration de l'Environnement
+
+Pour configurer l'environnement de l'application, vous pouvez créer un fichier `.env` à la racine du projet et y ajouter les variables d'environnement nécessaires, par exemple :
+
+```dotenv
+DATABASE_URL="postgresql://postgres:Serbao%22(@localhost:5432/placement-direct"
+PORT=3001
+SECRET_KEY=VOTRE_CLE_SECRETE
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
