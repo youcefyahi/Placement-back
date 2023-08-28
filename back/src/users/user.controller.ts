@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Request, UseGuards,UnauthorizedException, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards, UnauthorizedException, Put } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { PrismaService } from '../services/prisma.service';
 import { AuthGuard } from '../middleware/auth.middleware';
@@ -29,12 +29,9 @@ export class UserController {
         const newUser = await this.prismaService.createUser({
             ...userData,
             password: hashedPassword
-            
+
         });
-
-
         return { message: 'Utilisateur enregistré avec succès' };
-
     }
 }
 
@@ -55,34 +52,28 @@ export class UserProfileController {
         if (!userProfile) {
             return { message: 'Utilisateur non trouvé' };
         }
-
         return userProfile;
     }
 
+    @UseGuards(AuthGuard)
     @Put()
     async updateUser(@Request() req, @Body() userData: User) {
 
         const userId = req['userId'];
         const updatedUser = await this.userService.updateUserProfile(userId, userData);
-
-        // Vous pouvez retourner la réponse à la suite de la mise à jour si nécessaire
-        console.log(updatedUser)
         return updatedUser;
     }
 
     @Put('password')
     async updatePassword(@Body() userData: {
         email: string;
-        password: string; 
+        password: string;
     }) {
         // Utilisez bcrypt pour hacher le nouveau mot de passe
         const saltOrRounds = 10; // Nombre de "salts" pour le hachage
         const hashedPassword = await bcrypt.hash(userData.password, saltOrRounds);
-
         // Appelez la méthode pour mettre à jour le mot de passe dans le service approprié (par exemple, UserService)
         const updatedPassword = await this.userService.updatedPassword(userData.email, hashedPassword);
-
-        console.log(updatedPassword);
         return updatedPassword;
     }
 

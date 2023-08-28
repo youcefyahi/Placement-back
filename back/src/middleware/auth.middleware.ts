@@ -4,9 +4,6 @@ import { JwtService } from "@nestjs/jwt";
 import { Observable } from 'rxjs';
 
 
-
-
-
 @Injectable()
 
 export class AuthMiddleware implements NestMiddleware {
@@ -22,13 +19,10 @@ export class AuthMiddleware implements NestMiddleware {
         try{
             const decoded = this.jwtService.verify(token.replace('Bearer ',''));
             req["userId"] = decoded.userId
-            console.log(decoded.userId)
             next();
         }catch(error){
             return res.status(401).json({message: 'Unauthorized Token'})
-        }
-
-     
+        }     
     }
 }
 
@@ -48,7 +42,6 @@ export class AuthGuard implements CanActivate {
         try{
             const decoded = this.jwtService.verify(token.replace('Bearer ',''));
             req["userId"] = decoded.userId
-            console.log(decoded.userId)
             return true;
         }catch(error){
             return res.status(401).json({message: 'Unauthorized Token'})
