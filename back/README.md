@@ -26,9 +26,11 @@ Un utilisateur de test a déjà été créé pour faciliter la vérification de 
 Pour configurer l'environnement de l'application, vous pouvez créer un fichier `.env` à la racine du projet et y ajouter les variables d'environnement nécessaires, par exemple :
 
 ```dotenv
+
+Le server est configuré pour de lancer sur le port 3001
+
 DATABASE_URL="postgresql://postgres:Serbao%22(@localhost:5432/placement-direct"
-PORT=3001
-SECRET_KEY=VOTRE_CLE_SECRETE
+
 
 
 <p align="center">
